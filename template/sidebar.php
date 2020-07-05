@@ -28,6 +28,18 @@
                 </a>
             </li>
 
+            <li class="menu-item <?=@$_GET['p']=='kriteria' || !$_GET['p']?'active':''?>">
+                <a href="index.php?p=kriteria" class="menu-link">
+                    <span class="menu-label">
+                        <span class="menu-name">Data Kriteria
+                        </span>
+                    </span>
+                    <span class="menu-icon">
+                        <i class="icon-placeholder fa fa-tag"></i>
+                    </span>
+                </a>
+            </li>
+
             <li class="menu-item <?=@$_GET['p']=='siswa'?'active':''?>">
                 <a href="index.php?p=siswa" class="menu-link">
                     <span class="menu-label">

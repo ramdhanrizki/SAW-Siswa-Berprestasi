@@ -1,43 +1,40 @@
 <!-- Modal Tambah Siswa -->
-<div class="modal fade modal-slide-left" id="modalTambahKelas" tabindex="-1" role="dialog"
+<div class="modal fade modal-slide-left" id="modalTambahKriteria" tabindex="-1" role="dialog"
     aria-labelledby="slideLeftModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="slideLeftModalLabel">Tambah Kelas</h5>
+                <h5 class="modal-title" id="slideLeftModalLabel">Tambah Kriteria</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" action="<?=BASE_URL?>/api/kelas.php?aksi=tambah" id="formTambahKelas">
+                <form method="post" action="<?=BASE_URL?>/api/kriteria.php?aksi=tambah" id="formTambahKelas">
                      <div class="form-group">
-                        <label for="nisn">Nama Kelas</label>
-                        <input type="text" name="nama_kelas" class="form-control" required>
+                        <label for="nisn">Kriteria</label>
+                        <input type="text" autocomplete="off" placeholder="Nama Kriteria" name="kriteria" class="form-control" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="nisn">Jenjang</label>
-                        <input type="number" name="tingkat" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="nisn">Jurusan</label>
-                        <input type="text" name="jurusan" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="nisn">Wali Kelas</label>
-                        <select name="wali_kelas" id="" class="form-control">
-                           <?=getListGuru($db)?>
+                        <label for="nisn">Atribut</label>
+                        <select class="form-control" name="atribut" required>
+                            <option disabled selected required>Pilih...</option>
+                            <option value="Cost">Cost</option>
+                            <option value="Benefit">Benefit</option>
                         </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nisn">Bobot</label>
+                        <input placeholder="0.xx - 1" type="number" autocomplete="off" min="0" max="1" step="any" name="bobot" class="form-control" required>
                     </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                     Batalkan
                 </button>
-                <button type="submit" name="tambah" class="btn btn-primary">Tambah Kelas</button>
+                <button type="submit" name="tambah" class="btn btn-primary">Tambah Data</button>
                 </form>
             </div>
         </div>

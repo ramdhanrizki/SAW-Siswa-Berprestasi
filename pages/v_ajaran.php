@@ -1,5 +1,5 @@
 <?php 
-    $ajaran = mysqli_query($db, "SELECT * from tbl_ajaran order by id_ajaran desc");
+    $ajaran = mysqli_query($db, "SELECT * from tbl_ajaran order by tahun_ajaran desc");
 
 ?>  
 <div class="bg-dark">

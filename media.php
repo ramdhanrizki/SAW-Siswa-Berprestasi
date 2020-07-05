@@ -29,6 +29,12 @@
             case "update_ajaran":
                 include "pages/v_update_ajaran.php";
             break;
+            case "kriteria":
+                include "pages/v_kriteria.php";
+            break;
+            case "update_kriteria":
+                include "pages/v_update_kriteria.php";
+            break;
             default:
                 echo "<script>document.location.href='".BASE_URL."/404.php'</script>";
                 // header("location:404.php");
