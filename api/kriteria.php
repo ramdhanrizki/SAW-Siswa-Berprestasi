@@ -13,7 +13,9 @@
     function delete($db)
     {
         $query = "DELETE from tbl_kriteria WHERE id_kriteria='$_GET[id]'";
+        $query2 = "DELETE FROM tbl_subkriteria WHERE id_kriteria='$_GET[id]'";
         mysqli_query($db, $query);
+        mysqli_query($db, $query2);
         echo "<script>alert('Berhasil menghapus data kriteria')</script>";
         echo "<script>document.location.href='".BASE_URL."/index.php?p=kriteria'</script>";
         // header("location:../index.php?p=siswa");
@@ -26,6 +28,14 @@
         // });
         // </script>";
         // showSuccess("Berhasil", "Data siswa berhasil dihapus");    
+    }
+
+    function deleteSub($db)
+    {
+        $query = "DELETE from tbl_subkriteria WHERE id_subkriteria='$_GET[id]'";
+        mysqli_query($db, $query);
+        echo "<script>alert('Berhasil menghapus data sub kriteria')</script>";
+        echo "<script>document.location.href='".BASE_URL."/index.php?p=kriteria'</script>";
     }
 
     function saveData($db)
@@ -53,6 +63,26 @@
         }    
     }
 
+    function addSubKriteria($db)
+    {
+        if(isset($_POST['simpan'])) {
+            $kriteria = $_POST['kriteria'];
+            $sub_kriteria = $_POST['sub_kriteria'];
+            $nilai = $_POST['nilai'];
+            $query = mysqli_query($db,"INSERT INTO tbl_subkriteria(id_kriteria,nama_subkriteria,nilai_subkriteria)
+                            VALUES ('$kriteria','$sub_kriteria','$nilai')");
+            if($query) {
+                echo "<script>alert('Sub Kriteria Berhasil Ditambahkan');
+                    document.location.href='".BASE_URL."/index.php?p=kriteria#line-subkriteria';
+                </script>";
+            }else {
+                echo "Terjadi Kesalahan : ".mysqli_error($db);  
+            }
+        }
+    }
+
+    
+
     @$act = $_GET['aksi'];
     if(!$act) {
         getAll($db);
@@ -66,6 +96,12 @@
         break;
         case "delete":
             delete($db);
+        break;
+        case "tambah_sub":
+            addSubKriteria($db);
+        break;
+        case "delete_sub":
+            deleteSub($db);
         break;
     }
 ?>

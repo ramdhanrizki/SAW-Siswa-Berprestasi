@@ -93,6 +93,7 @@
                         $_SESSION['Role'] = $row['role'];
                         $_SESSION['Username'] = $row['username'];
                         $_SESSION['Nama'] = $row['nama'];
+                        $_SESSION['id_pengguna'] = $row['id_pengguna'];
                         // header("location:tes.php");
                         echo "<script>document.location.href='".BASE_URL."'</script>";
                     }

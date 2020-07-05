@@ -35,6 +35,15 @@
             case "update_kriteria":
                 include "pages/v_update_kriteria.php";
             break;
+            case "update_subkriteria":
+                include "pages/v_update_sub_kriteria.php";
+            break;
+            case "nilai":
+                include "pages/v_nilai.php";
+            break;
+            case "isi_nilai":
+                include "pages/v_isi_nilai.php";
+            break;
             default:
                 echo "<script>document.location.href='".BASE_URL."/404.php'</script>";
                 // header("location:404.php");
