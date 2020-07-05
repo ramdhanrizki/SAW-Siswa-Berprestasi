@@ -1,11 +1,9 @@
 <?php 
-    $ajaran = mysqli_fetch_assoc(mysqli_query($db, "select * from tbl_ajaran order by id_ajaran desc"));
+    $ajaran = mysqli_fetch_assoc(mysqli_query($db, "select * from tbl_ajaran order by tahun_ajaran desc"));
     $querySiswa = "SELECT * FROM tbl_siswa left join tbl_anggota_kelas on tbl_anggota_kelas.id_siswa = tbl_siswa.id_siswa
         LEFT JOIN tbl_kelas on tbl_kelas.id_kelas = tbl_anggota_kelas.id_kelas
-        WHERE tbl_anggota_kelas.id_ajaran = '".$ajaran['id_ajaran']."'";
+        AND tbl_anggota_kelas.id_ajaran = '".$ajaran['id_ajaran']."'";
     $siswa = mysqli_query($db, $querySiswa);
-    
-    // echo var_dump($kk);
 ?>  
 <div class="bg-dark">
     <div class="container  m-b-30">
@@ -66,7 +64,7 @@
                                     <td><?=$row['jenis_kelamin']?></td>
                                     <td><?=$row['tempat_lahir']?></td>
                                     <td><?=$row['tanggal_lahir']?></td>
-                                    <td><?=$row['nama_kelas']?></td>
+                                    <td><?=$row['nama_kelas']?$row['nama_kelas']:'Belum Terdaftar'?></td>
                                     <td>
                                         <a href="<?=BASE_URL?>/api/siswa.php?aksi=delete&id=<?=$row['id_siswa']?>" class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin akan menghapus data siswa tersebut?');"><i class="fa fa-trash"></i></a>
                                         <a href="<?=BASE_URL?>/index.php?p=update_siswa&id=<?=$row['id_siswa']?>" class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i></a>

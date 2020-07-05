@@ -1,6 +1,6 @@
 <?php 
     $idAjaran = @$_GET['idajaran'];
-    $ajaran = mysqli_fetch_assoc(mysqli_query($db, "select * from tbl_ajaran order by id_ajaran desc"));
+    $ajaran = mysqli_fetch_assoc(mysqli_query($db, "select * from tbl_ajaran order by tahun_ajaran desc"));
     if($idAjaran) {
         $ajaran = mysqli_fetch_assoc(mysqli_query($db, "select * from tbl_ajaran where id_ajaran='$idAjaran'"));
     }

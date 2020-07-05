@@ -52,6 +52,18 @@
                 </a>
             </li>
 
+            <li class="menu-item <?=@$_GET['p']=='ajaran'?'active':''?>">
+                <a href="index.php?p=ajaran" class="menu-link">
+                    <span class="menu-label">
+                        <span class="menu-name">Data Tahun Ajaran
+                        </span>
+                    </span>
+                    <span class="menu-icon">
+                        <i class="icon-placeholder mdi mdi-file-document-box-outline"></i>
+                    </span>
+                </a>
+            </li>
+
             <li class="menu-item <?=@$_GET['p']=='ranking'?'active':''?>">
                 <a href="index.php?p=ranking" class="menu-link">
                     <span class="menu-label">
