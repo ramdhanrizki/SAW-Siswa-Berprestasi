@@ -40,6 +40,18 @@
                 </a>
             </li>
 
+            <li class="menu-item <?=@$_GET['p']=='kelas'?'active':''?>">
+                <a href="index.php?p=kelas" class="menu-link">
+                    <span class="menu-label">
+                        <span class="menu-name">Data Kelas
+                        </span>
+                    </span>
+                    <span class="menu-icon">
+                        <i class="icon-placeholder mdi mdi-file-document-box-outline"></i>
+                    </span>
+                </a>
+            </li>
+
             <li class="menu-item <?=@$_GET['p']=='ranking'?'active':''?>">
                 <a href="index.php?p=ranking" class="menu-link">
                     <span class="menu-label">
