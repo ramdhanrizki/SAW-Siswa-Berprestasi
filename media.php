@@ -44,6 +44,15 @@
             case "isi_nilai":
                 include "pages/v_isi_nilai.php";
             break;
+            case "kepribadian":
+                include "pages/v_kepribadian.php";
+            break;
+            case "isi_pribadi":
+                include "pages/v_isi_pribadi.php";
+            break;
+            case "ranking":
+                include "pages/v_ranking.php";
+            break;
             default:
                 echo "<script>document.location.href='".BASE_URL."/404.php'</script>";
                 // header("location:404.php");

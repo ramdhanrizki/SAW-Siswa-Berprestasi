@@ -10,7 +10,8 @@
         $qkelas = mysqli_fetch_assoc(mysqli_query($db, "SELECT * FROM tbl_kelas where id_kelas='$kelas'"));
         $mapel = mysqli_query($db, "SELECT * FROM tbl_matpel WHERE kelompok='wajib' or kelompok='$qkelas[jurusan]'");
     }
-    echo mysqli_error($db);
+    
+    // echo mysqli_error($db);
 ?>  
 <div class="bg-dark">
     <div class="container  m-b-30">
@@ -80,12 +81,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $no=1;while($row = @mysqli_fetch_array(@$mapel)) {?>
+                                <?php $no=1;while($row = @mysqli_fetch_array(@$mapel)) {
+                                    $cek = mysqli_query($db, "select * from tbl_nilai where id_ajaran='$_GET[ajaran]' and id_matpel='$row[id_matpel]'");?>
                                 <tr>
                                     <td><?=$no++?></td>
                                     <td><?=$row['nama_pelajaran']?></td>
                                     <td><?=$row['kelompok']?></td>
-                                    <td>Belum Lengkap</td>
+                                    <td><?=mysqli_num_rows($cek)>0?'Selesai Input':'Data Belum diinput'?></td>
                                     <td>
                                         <a href="<?=BASE_URL?>/index.php?p=isi_nilai&kelas=<?=$qkelas['id_kelas']?>&ajaran=<?=$idajaran?>&pelajaran=<?=$row['id_matpel']?>" class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i> Isi Nilai</a>
                                     </td>

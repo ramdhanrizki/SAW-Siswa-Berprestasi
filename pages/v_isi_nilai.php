@@ -34,23 +34,19 @@
             <div class="card">
 
                 <div class="card-body">
-                    <form method="post" action="">
+                <form method="post" action="">
                     <div class="table-responsive p-t-10">
-                        <table id="example" class="table" style="width:100%">
+                        <table class="table" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>No</th>
+                                    <th width="4%">No</th>
                                     <th>NISN</th>
                                     <th>Nama Siswa</th>
-                                    <th>N. Harian 1</th>
-                                    <th>N. Harian 2</th>
-                                    <th>N. Harian 3</th>
-                                    <th>N. UTS</th>
-                                    <th>N. UAS</th>
+                                    <th width="5%">N. Pengetahuan</th>
+                                    <th width="5%">N. Praktek</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            <form method="post" action="">
                                 <?php 
                                     $q = mysqli_query($db, "SELECT * FROM tbl_siswa siswa
                                     LEFT JOIN tbl_anggota_kelas anggota on anggota.id_siswa = siswa.id_siswa AND id_ajaran='$idajaran'
@@ -66,12 +62,10 @@
                                             <td>$row[nama_lengkap]</td>";
                                         $nilai = mysqli_fetch_assoc(mysqli_query($db, "SELECT * from tbl_nilai
                                             WHERE id_ajaran='$idajaran'
-                                            AND id_siswa='$row[id_siswa]'"));
-                                            echo "<td><input type='number' min=0 max=100 value='$nilai[n_harian1]' name='n_harian1[]' class='form-control' required></td>";
-                                            echo "<td><input type='number' min=0 max=100 value='$nilai[n_harian2]' name='n_harian2[]' class='form-control' required></td>";
-                                            echo "<td><input type='number' min=0 max=100 value='$nilai[n_harian3]' name='n_harian3[]' class='form-control' required></td>";
-                                            echo "<td><input type='number' min=0 max=100 value='$nilai[uts]' name='n_uts[]' class='form-control' required></td>";
-                                            echo "<td><input type='number' min=0 max=100 value='$nilai[uas]' name='n_uas[]' class='form-control' required></td>";
+                                            AND id_siswa='$row[id_siswa]'
+                                            AND id_matpel='$_GET[pelajaran]'"));
+                                            echo "<td><input type='number' min=0 max=100 value='$nilai[nilai_c]' name='nilai_c[]' class='form-control' required></td>";
+                                            echo "<td><input type='number' min=0 max=100 value='$nilai[nilai_p]' name='nilai_p[]' class='form-control' required></td>";
                                             
                                         echo "</tr>";
                                         $no++;
@@ -92,16 +86,20 @@
 <?php 
     if(isset($_POST['simpan'])) {
         $siswa = $_POST['siswa'];
-        $harian1 = $_POST['n_harian1'];
-        $harian2 = $_POST['n_harian2'];
-        $harian3 = $_POST['n_harian3'];
-        $uts = $_POST['n_uts'];
-        $uas = $_POST['n_uas'];
+        $nilai_c = $_POST['nilai_c'];
+        $nilai_p = $_POST['nilai_p'];
         for($i=0;$i<count($siswa);$i++) {
-            $akhir = ($harian1[$i] + $harian2[$i] + $harian3[$i] + $uts[$i] + $uas[$i]) / 5;
-            $query = "INSERT INTO tbl_nilai (id_ajaran,id_matpel,id_siswa,n_harian1,n_harian2,n_harian3,uts,uas,nilai_akhir)
-                values('$_GET[ajaran]','$_GET[pelajaran]','$siswa[$i]','$harian1[$i]','$harian2[$i]','$harian3[$i]',
-                '$uts[$i]','$uas[$i]',$akhir)";
+            $cek = mysqli_query($db, "SELECT * from tbl_nilai where id_ajaran='$_GET[ajaran]'
+                and id_matpel='$_GET[pelajaran]' and id_siswa='$siswa[$i]'");
+                 $akhir = ($nilai_c[$i] + $nilai_p[$i]) / 2;
+            if(mysqli_num_rows($cek)>0) {
+                $query = "UPDATE tbl_nilai set nilai_c='$nilai_c[$i]', nilai_p='$nilai_p[$i]',
+                nilai_akhir='$akhir' where id_ajaran='$_GET[ajaran]' and id_matpel='$_GET[pelajaran]' and id_siswa='$siswa[$i]'";
+            } else {
+                $query = "INSERT INTO tbl_nilai (id_ajaran,id_matpel,id_siswa,nilai_c,nilai_p,nilai_akhir) 
+                            values('$_GET[ajaran]','$_GET[pelajaran]','$siswa[$i]','$nilai_c[$i]','$nilai_p[$i]','$akhir')";
+            }
+
             mysqli_query($db, $query);
         }
         $url = BASE_URL."/index.php?p=nilai&ajaran=$_GET[ajaran]&kelas=$_GET[kelas]";;

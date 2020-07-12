@@ -28,7 +28,7 @@
                 </a>
             </li>
             <?php if($_SESSION['Role']=='Admin') {?>
-            <li class="menu-item <?=@$_GET['p']=='kriteria'?'activate':''?>>
+            <li class="menu-item <?=@$_GET['p']=='kriteria'?'activate':''?>">
                 <a href="index.php?p=kriteria" class="menu-link">
                     <span class="menu-label">
                         <span class="menu-name">Data Kriteria
@@ -81,6 +81,18 @@
                 <a href="index.php?p=nilai" class="menu-link">
                     <span class="menu-label">
                         <span class="menu-name">Input Nilai
+                        </span>
+                    </span>
+                    <span class="menu-icon">
+                        <i class="icon-placeholder fa fa-tags"></i>
+                    </span>
+                </a>
+            </li>  
+
+            <li class="menu-item <?=@$_GET['p']=='kepribadian'?'active':''?>">
+                <a href="index.php?p=kepribadian" class="menu-link">
+                    <span class="menu-label">
+                        <span class="menu-name">Input Kepribadian
                         </span>
                     </span>
                     <span class="menu-icon">
