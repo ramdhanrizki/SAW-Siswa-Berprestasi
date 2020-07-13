@@ -14,17 +14,17 @@ aria-labelledby="slideLeftModalLabel" aria-hidden="true">
                 <input type="hidden" name="ajaran" value="<?=$ajaran['id_ajaran']?>">
                     <div class="form-group">
                     <label for="nisn">NISN</label>
-                    <input type="text" name="nisn" class="form-control">
+                    <input type="text" name="nisn" class="form-control" required>
                 </div>
 
                 <div class="form-group">
                     <label for="nisn">Nama Lengkap</label>
-                    <input type="text" name="nama_lengkap" class="form-control">
+                    <input type="text" name="nama_lengkap" class="form-control" required>
                 </div>
 
                 <div class="form-group">
                     <label for="nisn">Jenis Kelamin</label>
-                    <select name="jenis_kelamin" class="form-control">
+                    <select name="jenis_kelamin" class="form-control" required>
                         <option value="L">Laki-laki</option>
                         <option value="P">Perempuan</option>
                     </select>
@@ -32,17 +32,17 @@ aria-labelledby="slideLeftModalLabel" aria-hidden="true">
 
                 <div class="form-group">
                     <label for="nisn">Tanggal Lahir</label>
-                    <input type="date" name="tanggal_lahir" class="form-control">
+                    <input type="date" name="tanggal_lahir" class="form-control" required>
                 </div>
 
                 <div class="form-group">
                     <label for="nisn">Tempat Lahir</label>
-                    <input type="text" name="tempat_lahir" class="form-control">
+                    <input type="text" name="tempat_lahir" class="form-control" required>
                 </div>
 
                 <div class="form-group">
                     <label for="kelas">Kelas (Thn Ajaran : <?=$ajaran['tahun_ajaran']?>)</label>
-                    <select name="kelas" id="" class="form-control">
+                    <select name="kelas" id="" class="form-control" required>
                         <?=getListKelas($db)?>
                     </select>
                 </div>

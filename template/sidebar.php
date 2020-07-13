@@ -39,6 +39,18 @@
                     </span>
                 </a>
             </li>
+            
+            <li class="menu-item <?=(@$_GET['p']=='guru' || @$_GET['p']=='update_guru')?'active':''?>">
+                <a href="index.php?p=guru" class="menu-link">
+                    <span class="menu-label">
+                        <span class="menu-name">Data Guru
+                        </span>
+                    </span>
+                    <span class="menu-icon">
+                        <i class="icon-placeholder fa fa-user"></i>
+                    </span>
+                </a>
+            </li>
 
             <li class="menu-item <?=@$_GET['p']=='siswa'?'active':''?>">
                 <a href="index.php?p=siswa" class="menu-link">

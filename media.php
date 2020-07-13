@@ -53,6 +53,12 @@
             case "ranking":
                 include "pages/v_ranking.php";
             break;
+            case "guru":
+                include "pages/v_guru.php";
+            break;
+            case "update_guru":
+                include "pages/v_update_guru.php";
+            break;
             default:
                 echo "<script>document.location.href='".BASE_URL."/404.php'</script>";
                 // header("location:404.php");
