@@ -21,8 +21,8 @@
 
             <div class="col-md-6 text-white p-b-30">
                 <div class="media">
-                    <div class="avatar avatar mr-3">
-                        <img src="assets/img/users/user-1.jpg" class="rounded-circle" alt="">
+                    <div class="avatar avatar-lg mr-3">
+                        <span class="avatar-title rounded-circle bg-white-translucent m-r-3"> <i class="fa fa-user"></i> </span>
                     </div>
                     <div class="media-body">
                         <h1><?=$nuser['username']?></h1>
