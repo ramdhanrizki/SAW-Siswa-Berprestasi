@@ -4,13 +4,14 @@
     $idajaran = @$_GET['ajaran'];
     if($kelas && $idajaran) {
         $qkelas = mysqli_fetch_assoc(mysqli_query($db, "SELECT * FROM tbl_kelas where id_kelas='$kelas'"));
-        $q = "select * from tbl_anggota_kelas 
+        $q = "select *,tbl_siswa.id_siswa as id from tbl_anggota_kelas 
         left join tbl_siswa on tbl_siswa.id_siswa = tbl_anggota_kelas.id_siswa
         left join tbl_kepribadian pribadi on pribadi.id_siswa = tbl_siswa.id_siswa and pribadi.id_ajaran='$idajaran'
         where id_kelas='$_GET[kelas]' and tbl_anggota_kelas.id_ajaran='$idajaran'";
         $siswa = mysqli_query($db, $q);
         // echo $q;
     }
+    // echo mysqli_error($db);
 ?>  
 <div class="bg-dark">
     <div class="container  m-b-30">
@@ -81,7 +82,7 @@
                             </thead>
                             <tbody>
                                 <?php $no=1;while($row = @mysqli_fetch_array(@$siswa)) {?>
-                                <input type="hidden" name="idsiswa[]" value="<?=$row['id_siswa']?>"/>
+                                <input type="hidden" name="idsiswa[]" value="<?=$row['id']?>"/>
                                 <tr>
                                     <td width="4%"><?=$no++?></td>
                                     <td><?=$row['nisn']?></td>
@@ -126,19 +127,20 @@
 </div>
 <?php 
     if(isset($_POST['simpan'])) {
-        @$siswa = $_POST['idsiswa'];
+        @$ss = $_POST['idsiswa'];
         @$kehadiran = $_POST['kehadiran'];
         @$kepribadian = $_POST['kepribadian'];
-        if($siswa) {
-            for($i=0;$i<count($siswa);$i++) {
+        if($ss) {
+            echo var_dump($ss);
+            for($i=0;$i<count($ss);$i++) {
                 $cek = mysqli_query($db, "SELECT * from tbl_kepribadian where id_ajaran='$_GET[ajaran]'
-                     and id_siswa='$siswa[$i]'");
+                     and id_siswa='$ss[$i]'");
                 if(mysqli_num_rows($cek)>0) {
                     $query = "UPDATE tbl_kepribadian set kepribadian='$kepribadian[$i]', kehadiran='$kehadiran[$i]'
-                    where id_ajaran='$_GET[ajaran]' and id_siswa='$siswa[$i]'";
+                    where id_ajaran='$_GET[ajaran]' and id_siswa='$ss[$i]'";
                 } else {
                     $query = "INSERT INTO tbl_kepribadian (id_ajaran,id_siswa,kehadiran,kepribadian) 
-                                values('$_GET[ajaran]','$siswa[$i]','$kehadiran[$i]','$kepribadian[$i]')";
+                                values('$_GET[ajaran]','$ss[$i]','$kehadiran[$i]','$kepribadian[$i]')";
                 }
                 
                 mysqli_query($db, $query);

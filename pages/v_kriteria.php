@@ -37,10 +37,10 @@
                             <div class="row m-b-20">
                                 <div class="col-md-12 text-right my-auto">
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <button type="button" class="btn btn-white shadow-none" data-toggle="modal"
+                                        <!-- <button type="button" class="btn btn-white shadow-none" data-toggle="modal"
                                             data-target="#modalTambahKriteria"><i class="mdi mdi-plus"></i> Tambah
                                             Kriteria
-                                        </button>
+                                        </button> -->
                                     </div>
                                 </div>
                             </div>
@@ -64,10 +64,10 @@
                                             <td width="15%"><?=$row['atribut_kriteria']?></td>
                                             <td width="15%"><?=$row['bobot_kriteria']?></td>
                                             <td>
-                                                <a href="<?=BASE_URL?>/api/kriteria.php?aksi=delete&id=<?=$row['id_kriteria']?>"
+                                                <!-- <a href="<?=BASE_URL?>/api/kriteria.php?aksi=delete&id=<?=$row['id_kriteria']?>"
                                                     class="btn btn-sm btn-danger"
                                                     onclick="return confirm('Apakah anda yakin akan menghapus data kriteria tersebut?');"><i
-                                                        class="fa fa-trash"></i></a>
+                                                        class="fa fa-trash"></i></a> -->
                                                 <a href="<?=BASE_URL?>/index.php?p=update_kriteria&id=<?=$row['id_kriteria']?>"
                                                     class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i></a>
                                             </td>
@@ -81,9 +81,9 @@
                         <div class="row m-b-20">
                                 <div class="col-md-12 text-right my-auto">
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <button type="button" class="btn btn-white shadow-none" data-toggle="modal"
+                                        <!-- <button type="button" class="btn btn-white shadow-none" data-toggle="modal"
                                             data-target="#modalTambahSubKriteria"><i class="mdi mdi-plus"></i> Tambah Sub Kriteria
-                                        </button>
+                                        </button> -->
                                     </div>
                                 </div>
                             </div>
@@ -107,10 +107,10 @@
                                             <td width="15%"><?=$row['nama_subkriteria']?></td>
                                             <td width="15%"><?=$row['nilai_subkriteria']?></td>
                                             <td>
-                                                <a href="<?=BASE_URL?>/api/kriteria.php?aksi=delete_sub&id=<?=$row['id_subkriteria']?>"
+                                                <!-- <a href="<?=BASE_URL?>/api/kriteria.php?aksi=delete_sub&id=<?=$row['id_subkriteria']?>"
                                                     class="btn btn-sm btn-danger"
                                                     onclick="return confirm('Apakah anda yakin akan menghapus data kriteria tersebut?');"><i
-                                                        class="fa fa-trash"></i></a>
+                                                        class="fa fa-trash"></i></a> -->
                                                 <a href="<?=BASE_URL?>/index.php?p=update_subkriteria&id=<?=$row['id_subkriteria']?>"
                                                     class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i></a>
                                             </td>

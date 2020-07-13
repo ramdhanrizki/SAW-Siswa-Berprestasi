@@ -32,10 +32,10 @@
                                 <button type="button" class="btn btn-white shadow-none" data-toggle="modal"
                                     data-target="#modalTambahKelas"><i class="mdi mdi-plus"></i> Tambah kelas
                                 </button>
-                                <button type="button" class="btn btn-white shadow-none">
+                                <!-- <button type="button" class="btn btn-white shadow-none">
                                     <i class="mdi mdi-import"></i>Import Excel</button>
                                 <button type="button" class="btn btn-white shadow-none">
-                                    <i class="mdi mdi-download"></i>Download Excel</button>
+                                    <i class="mdi mdi-download"></i>Download Excel</button> -->
                             </div>
 
                         </div>

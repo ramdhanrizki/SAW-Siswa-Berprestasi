@@ -17244,3 +17244,23 @@ img
 
     vertical-align: sub;
 }
+
+.box {
+    /* background:#3e4676 */
+    border:1px solid #3e4676;
+    /* padding:10px; */
+    margin-bottom:15px;
+    margin-top:15px;
+}
+
+.box-header{
+    color:white;
+    background:#3e4676;
+    padding:10px;
+    font-size:16px;
+    font-weight: bold;
+}
+
+.box-body{
+    padding:10px;
+}
