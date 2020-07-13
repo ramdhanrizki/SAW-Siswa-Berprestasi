@@ -59,6 +59,9 @@
             case "update_guru":
                 include "pages/v_update_guru.php";
             break;
+            case "rekapsiswa":
+                include "pages/v_rekap_siswa.php";
+            break;
             default:
                 echo "<script>document.location.href='".BASE_URL."/404.php'</script>";
                 // header("location:404.php");

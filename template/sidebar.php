@@ -112,6 +112,18 @@
                     </span>
                 </a>
             </li>  
+
+            <li class="menu-item <?=@$_GET['p']=='rekapsiswa'?'active':''?>">
+                <a href="index.php?p=rekapsiswa" class="menu-link">
+                    <span class="menu-label">
+                        <span class="menu-name">Rekap Siswa
+                        </span>
+                    </span>
+                    <span class="menu-icon">
+                        <i class="icon-placeholder fa fa-user"></i>
+                    </span>
+                </a>
+            </li>  
             <?php }?>
 
             <li class="menu-item <?=@$_GET['p']=='ranking'?'active':''?>">
