@@ -4,7 +4,7 @@
     $idajaran = @$_GET['ajaran'];
     if($kelas && $idajaran) {
         $qkelas = mysqli_fetch_assoc(mysqli_query($db, "SELECT * FROM tbl_kelas where id_kelas='$kelas'"));
-        $q = "select *,tbl_siswa.id_siswa as id from tbl_anggota_kelas 
+        $q = "select *,tbl_siswa.id_siswa as alternatif from tbl_anggota_kelas 
         left join tbl_siswa on tbl_siswa.id_siswa = tbl_anggota_kelas.id_siswa
         left join tbl_kepribadian pribadi on pribadi.id_siswa = tbl_siswa.id_siswa and pribadi.id_ajaran='$idajaran'
         left join (select id_siswa,avg(nilai_akhir) as rata from tbl_nilai where tbl_nilai.id_ajaran='$idajaran' group by id_siswa) nilai on nilai.id_siswa = tbl_siswa.id_siswa
@@ -71,7 +71,7 @@
                     </div>
                     <form method="post" action="">
                     <div class="table-responsive p-t-10">
-                        <table class="table" style="width:100%">
+                        <table class="table" style="width:100%" id="example">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -81,11 +81,12 @@
                                     <th>Nilai Rapor</th>
                                     <th>Kehadiran</th>
                                     <th>Nilai Sikap</th>
+                                    <th>Sampel</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $no=1;while($row = @mysqli_fetch_array(@$siswa)) {?>
-                                <input type="hidden" name="idsiswa[]" value="<?=$row['id']?>"/>
+                                <input type="hidden" name="idsiswa[]" value="<?=$row['alternatif']?>"/>
                                 <tr>
                                     <td width="4%"><?=$no++?></td>
                                     <td><?=$row['nisn']?></td>
@@ -94,10 +95,13 @@
                                     <td><?=$row['rata']?$row['rata']:'Belum Input'?></td>
                                     <?php 
                                         $kepribadian = mysqli_fetch_assoc(mysqli_query($db,"select * from tbl_subkriteria where id_subkriteria='$row[kepribadian]'"));
-                                        $kehadiran = mysqli_fetch_assoc(mysqli_query($db,"select * from tbl_subkriteria where id_subkriteria='$row[kehadiran]'"));
+                                        $q = "select * from tbl_kehadiran where id_siswa='$row[alternatif]' and id_ajaran='$idajaran'";
+                                        $kehadiran = mysqli_fetch_assoc(mysqli_query($db,$q));
+
                                     ?>
-                                    <td><?=$kehadiran['nama_subkriteria']?$kepribadian['nama_subkriteria']:'Belum Input'?></td>
+                                    <td><?=$kehadiran['persentase']?$kehadiran['persentase']:'Belum Input'?> %</td>
                                     <td><?=$kepribadian['nama_subkriteria']?$kepribadian['nama_subkriteria']:'Belum Input'?></td>
+                                    <td><?=$row['status']==1?'Sampel':'Bukan Sampel'?></td>
                                 </tr>
                                 <?php }?>
                             </tbody>

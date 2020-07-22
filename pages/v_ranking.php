@@ -10,32 +10,53 @@
             return 4;
         }
     }
+
+    function transformKehadiran($kehadiran) {
+        if($kehadiran<70) {
+            return 1;
+        }else if($kehadiran>69 && $kehadiran<=79) {
+            return 2;
+        }else if($kehadiran>79 && $kehadiran<=89) {
+            return 3;
+        }else if($kehadiran>89 && $kehadiran<=100) {
+            return 4;
+        }
+    }
+
     $ajaran = mysqli_fetch_assoc(mysqli_query($db, "select * from tbl_ajaran order by tahun_ajaran desc"));
     $idajaran = @$_GET['ajaran'];
     $jurusan = @$_GET['jurusan'];
     if($idajaran && $jurusan) {
-        $q = "select * from tbl_anggota_kelas 
-        left join tbl_siswa on tbl_siswa.id_siswa = tbl_anggota_kelas.id_siswa
-        left join tbl_kepribadian pribadi on pribadi.id_siswa = tbl_siswa.id_siswa and pribadi.id_ajaran='$idajaran'
+        $q = "select *, tbl_siswa.id_siswa as alternatif from tbl_siswa
+        left join tbl_anggota_kelas on tbl_anggota_kelas.id_siswa = tbl_siswa.id_siswa
         left join tbl_kelas on tbl_kelas.id_kelas = tbl_anggota_kelas.id_kelas
-        where tbl_anggota_kelas.id_ajaran='$idajaran' and tbl_kelas.jurusan='$jurusan'";
-
+        left join tbl_kepribadian pribadi on pribadi.id_siswa = tbl_siswa.id_siswa and pribadi.id_ajaran='$idajaran'
+        where tbl_anggota_kelas.id_ajaran = '$idajaran'
+        and tbl_kelas.jurusan = '$jurusan'
+        and tbl_siswa.status='1'";
         $siswa = mysqli_query($db, $q);
+        mysqli_query($db, "DELETE FROM tbl_hasil WHERE id_ajaran='$idajaran' and jurusan='$jurusan'");
 
         $nilai =[];
         while($row = mysqli_fetch_array($siswa)) {
             $res = [];
             // echo var_dump($row);
-            $res['id_siswa'] = $row['id_siswa'];
+            $res['id_siswa'] = $row['alternatif'];
             $res['nisn'] = $row['nisn'];
             $res['nama'] = $row['nama_lengkap'];
             $res['jenis_kelamin'] = $row['jenis_kelamin'];  
-            $q2 = "SELECT avg(nilai_akhir) rata from tbl_nilai where id_siswa ='$row[id_siswa]' and id_ajaran='$idajaran'";
+            $q2 = "SELECT avg(nilai_akhir) rata from tbl_nilai where id_siswa ='$row[alternatif]' and id_ajaran='$idajaran'";
+    
             $rata= mysqli_fetch_assoc(mysqli_query($db,$q2));
-            $res['mean'] = $rata['rata']; 
+
+            $q4 = "SELECT * from tbl_kehadiran WHERE id_siswa = '$row[alternatif]' and id_ajaran='$idajaran'";
+            $hadir = mysqli_fetch_assoc(mysqli_query($db, $q4));
+            
+            $res['mean'] = round($rata['rata']); 
             $res['c1'] = transformNilai($res['mean']);
+            $res['c2'] = transformKehadiran($hadir['persentase']);
             // Get Nilai Kepribadian dan kehadiran
-            $q3 = mysqli_query($db, "SELECT * FROM tbl_kepribadian where id_siswa='$row[id_siswa]' and id_ajaran='$idajaran'");
+            $q3 = mysqli_query($db, "SELECT * FROM tbl_kepribadian where id_siswa='$row[alternatif]' and id_ajaran='$idajaran'")or die(mysqli_error($db));
             if(mysqli_num_rows($q3)>0) {
                 $data = mysqli_fetch_assoc($q3);
                 $res['pribadi'] = $data['kepribadian'];
@@ -45,25 +66,28 @@
                 $res['pribadi'] = 9;
                 $res['kehadiran'] = 14;
             }
+
+            // echo mysqli_error($db);
             // Delete old data
-            mysqli_query($db, "DELETE FROM tbl_penilaian_alt where id_alternatif='$row[id_siswa]' and id_ajaran='$idajaran'");
+            mysqli_query($db, "DELETE FROM tbl_penilaian_alt where id_alternatif='$row[alternatif]' and id_ajaran='$idajaran'")or die(mysqli_error($db));
+            // mysqli_query($db, "DELETE FROM tbl_hasil where id_siswa='$row[alternatif]' and id_ajaran='$idajaran'")or die(mysqli_error($db));
             // Save data nilai
             $kriteria = mysqli_fetch_assoc(mysqli_query($db, "select * from tbl_subkriteria where id_kriteria='1' and nilai_subkriteria='$res[c1]'"));
             $saveNilai = mysqli_query($db, "INSERT INTO tbl_penilaian_alt (id_alternatif,id_kriteria,id_subkriteria,nilai_subkriteria,id_ajaran) 
-                values('$row[id_siswa]','$kriteria[id_kriteria]', '$kriteria[id_subkriteria]', '$kriteria[nilai_subkriteria]','$idajaran')");
+                values('$row[alternatif]','$kriteria[id_kriteria]', '$kriteria[id_subkriteria]', '$kriteria[nilai_subkriteria]','$idajaran')");
             
             // Save data kehadiran
-            $kriteria = mysqli_fetch_assoc(mysqli_query($db, "select * from tbl_subkriteria where id_kriteria='2' and id_subkriteria='$res[kehadiran]'"));
+            $kriteria = mysqli_fetch_assoc(mysqli_query($db, "select * from tbl_subkriteria where id_kriteria='2' and nilai_subkriteria='$res[c2]'"));
             $res['n_kehadiran'] = $kriteria['nama_subkriteria'];
             $saveNilai = mysqli_query($db, "INSERT INTO tbl_penilaian_alt (id_alternatif,id_kriteria,id_subkriteria,nilai_subkriteria,id_ajaran) 
-                values('$row[id_siswa]','$kriteria[id_kriteria]', '$kriteria[id_subkriteria]', '$kriteria[nilai_subkriteria]','$idajaran')");
-            $res['c2'] = $kriteria['nilai_subkriteria'];
+                values('$row[alternatif]','$kriteria[id_kriteria]', '$kriteria[id_subkriteria]', '$kriteria[nilai_subkriteria]','$idajaran')");
+            // $res['c2'] = $kriteria['nilai_subkriteria'];
             // Save data Pribadi
             $kriteria = mysqli_fetch_assoc(mysqli_query($db, "select * from tbl_subkriteria where id_kriteria='3' and id_subkriteria='$res[pribadi]'"));
             $res['n_pribadi'] = $kriteria['nama_subkriteria'];
             $res['c3'] = $kriteria['nilai_subkriteria'];
             $saveNilai = mysqli_query($db, "INSERT INTO tbl_penilaian_alt (id_alternatif,id_kriteria,id_subkriteria,nilai_subkriteria,id_ajaran) 
-                values('$row[id_siswa]','$kriteria[id_kriteria]', '$kriteria[id_subkriteria]', '$kriteria[nilai_subkriteria]','$idajaran')");
+                values('$row[alternatif]','$kriteria[id_kriteria]', '$kriteria[id_subkriteria]', '$kriteria[nilai_subkriteria]','$idajaran')");
             $res['r1'] = 0;
             $res['r2'] =0;
             $res['r3'] = 0;
@@ -132,8 +156,8 @@
                                 <label for="">Jurusan</label>
                                 <select name="jurusan" class="form-control" id="jurusan">
                                 <option value="">Pilih Jurusan</option>
-                                    <option value="IPA" <?=$_GET['jurusan']=='IPA'?'selected':''?>>IPA</option>
-                                    <option value="IPS" <?=$_GET['jurusan']=='IPS'?'selected':''?>>IPS</option>    
+                                    <option value="IPA" <?=@$_GET['jurusan']=='IPA'?'selected':''?>>IPA</option>
+                                    <option value="IPS" <?=@$_GET['jurusan']=='IPS'?'selected':''?>>IPS</option>    
                                 </select>
                             </div>
                         </div>

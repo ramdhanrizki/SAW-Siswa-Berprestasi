@@ -23,7 +23,10 @@
 
                     <div class="form-group">
                         <label for="nisn">Jurusan</label>
-                        <input type="text" name="jurusan" class="form-control" required>
+                        <select name="jurusan" class="form-control" required>
+                            <option value="IPA">IPA</option>
+                            <option value="IPS">IPS</option>
+                        </select>
                     </div>
 
                     <div class="form-group">

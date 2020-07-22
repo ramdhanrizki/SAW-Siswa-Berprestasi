@@ -35,6 +35,10 @@
 
                     <div class="form-group">
                         <label for="nisn">Jurusan</label>
+                        <select name="jurusan" required>
+                            <option value="IPA" <?=$row['jurusan']=='IPA'?'required':''?>>IPA</option>
+                            <option value="IPS" <?=$row['jurusan']=='IPS'?'required':''?>>IPS</option>
+                        </select>
                         <input type="text" name="jurusan" class="form-control" required value="<?=$row['jurusan']?>">
                     </div>
 

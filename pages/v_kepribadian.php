@@ -2,13 +2,38 @@
     $ajaran = mysqli_fetch_assoc(mysqli_query($db, "select * from tbl_ajaran order by tahun_ajaran desc"));
     $kelas = @$_GET['kelas'];
     $idajaran = @$_GET['ajaran'];
+    function transformKehadiran($kehadiran) {
+        if($kehadiran<70) {
+            return 1;
+        }else if($kehadiran>69 && $kehadiran<=79) {
+            return 2;
+        }else if($kehadiran>79 && $kehadiran<=89) {
+            return 3;
+        }else if($kehadiran>89 && $kehadiran<=100) {
+            return 4;
+        }
+    }
     if($kelas && $idajaran) {
         $qkelas = mysqli_fetch_assoc(mysqli_query($db, "SELECT * FROM tbl_kelas where id_kelas='$kelas'"));
         $q = "select *,tbl_siswa.id_siswa as id from tbl_anggota_kelas 
         left join tbl_siswa on tbl_siswa.id_siswa = tbl_anggota_kelas.id_siswa
         left join tbl_kepribadian pribadi on pribadi.id_siswa = tbl_siswa.id_siswa and pribadi.id_ajaran='$idajaran'
         where id_kelas='$_GET[kelas]' and tbl_anggota_kelas.id_ajaran='$idajaran'";
+        // echo $q;
         $siswa = mysqli_query($db, $q);
+
+        // Init Data Kehadiran dari table kehadiran
+        // $list = mysqli_query($db, "SELECT * FROM tbl_kehadiran WHERE id_ajaran = '$idajaran'");
+        // if(mysqli_num_rows($list)>0) {
+        //     $del = mysqli_query($db, "DELETE FROM tbl_penilaian_alt WHERE id_ajaran='$idajaran' AND id_kriteria='2'");
+        //     while($row = mysqli_fetch_array($list)) {
+        //         $nilai = transformKehadiran($row['persentase']);
+        //         $gets = mysqli_query($db,"SELECT * FROM tbl_subkriteria WHERE id_kriteria='2' and nilai_subkriteria='$nilai'");
+        //         // echo mysqli_error($db);
+        //         $get = mysqli_fetch_assoc($gets);
+        //         $insert = mysqli_query($db,"INSERT INTO tbl_kepribadian(kehadiran, id_siswa, id_ajaran) VALUES('get[id_subkriteria]','$row[id_siswa]', '$idajaran')");
+        //     }
+        // }
         // echo $q;
     }
     // echo mysqli_error($db);
@@ -76,7 +101,7 @@
                                     <th>No</th>
                                     <th>NISN</th>
                                     <th>Nama Siswa</th>
-                                    <th>Kehadiran</th>
+                                    <!-- <th>Kehadiran</th> -->
                                     <th>Nilai Sikap</th>
                                 </tr>
                             </thead>
@@ -87,7 +112,7 @@
                                     <td width="4%"><?=$no++?></td>
                                     <td><?=$row['nisn']?></td>
                                     <td><?=$row['nama_lengkap']?></td>
-                                    <td width="15%">
+                                    <!-- <td width="15%">
                                         <select  name="kehadiran[]" class="form-control" required>
                                         <option value="">Pilih Persentase</option>
                                         <?php $q = mysqli_query($db, "select id_subkriteria,nama_subkriteria, nilai_subkriteria from tbl_subkriteria where id_kriteria='2'");
@@ -100,7 +125,8 @@
                                             }
                                         ?>
                                         </select>
-                                    <td width="10%">
+                                    </td> -->
+                                    <td width="20%">
                                         <select  name="kepribadian[]" class="form-control" required>
                                         <option value="">Pilih Nilai </option>
                                         <?php $q = mysqli_query($db, "select id_subkriteria,nama_subkriteria, nilai_subkriteria from tbl_subkriteria where id_kriteria='3'");
@@ -136,11 +162,15 @@
                 $cek = mysqli_query($db, "SELECT * from tbl_kepribadian where id_ajaran='$_GET[ajaran]'
                      and id_siswa='$ss[$i]'");
                 if(mysqli_num_rows($cek)>0) {
-                    $query = "UPDATE tbl_kepribadian set kepribadian='$kepribadian[$i]', kehadiran='$kehadiran[$i]'
+                    // $query = "UPDATE tbl_kepribadian set kepribadian='$kepribadian[$i]', kehadiran='$kehadiran[$i]'
+                    // where id_ajaran='$_GET[ajaran]' and id_siswa='$ss[$i]'";
+                    $query = "UPDATE tbl_kepribadian set kepribadian='$kepribadian[$i]'
                     where id_ajaran='$_GET[ajaran]' and id_siswa='$ss[$i]'";
                 } else {
-                    $query = "INSERT INTO tbl_kepribadian (id_ajaran,id_siswa,kehadiran,kepribadian) 
-                                values('$_GET[ajaran]','$ss[$i]','$kehadiran[$i]','$kepribadian[$i]')";
+                    // $query = "INSERT INTO tbl_kepribadian (id_ajaran,id_siswa,kehadiran,kepribadian) 
+                    //             values('$_GET[ajaran]','$ss[$i]','$kehadiran[$i]','$kepribadian[$i]')";
+                    $query = "INSERT INTO tbl_kepribadian (id_ajaran,id_siswa,kepribadian) 
+                                values('$_GET[ajaran]','$ss[$i]','$kepribadian[$i]')";
                 }
                 
                 mysqli_query($db, $query);
