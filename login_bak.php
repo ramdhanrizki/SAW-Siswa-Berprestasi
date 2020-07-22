@@ -1,3 +1,4 @@
+
 <?php 
     include "config/koneksi.php";
     include "config/const.php";
@@ -28,58 +29,54 @@
     <!--Material Icons-->
     <link rel="stylesheet" type="text/css" href="assets/fonts/materialdesignicons/materialdesignicons.min.css">
     <!--Bootstrap + atmos Admin CSS-->
-    <link rel="stylesheet" type="text/css" href="assets/css/atmos.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/atmos.min.css">
     <!-- Additional library for page -->
 
 </head>
 
 <body class="jumbo-page">
 
-    <main class="admin-main">
+    <main class="admin-main  ">
         <div class="container-fluid">
             <div class="row ">
-                <div class="col-lg-12 m-t-100">
-                    <p class="title" style="font-size:2em;text-align:center">
-                        Sistem Pendukung Keputusan Siswa Berprestasi <b>SMA YADIKA 3</b>
-                    </p>
-                </div>
-                <div class="col-lg-12 bg-gray m-t-10">
-                    <div class="row align-items-center">
-                        <div class="card mx-auto col-md-3">
-                            <div class="card-title">
+                <div class="col-lg-4  bg-white">
+                    <div class="row align-items-center m-h-100">
+                        <div class="mx-auto col-md-8">
+                            <div class="p-b-20 text-center">
+                                <p>
+                                    <img src="assets/img/logo.png" width="80" alt="">
+
+                                </p>
+                                <p class="admin-brand-content">
+                                    Sistem Pendukung Keputusan Siswa Berprestasi
+                                </p>
                             </div>
-                            <div class="card-body p-b-20">
-                                <div class="p-b-20 text-center">
-                                    <p>
-                                        <img src="assets/img/logo.png" width="40%" alt="">
-                                    </p>
-                                </div>
-                                <form class="needs-validation" action="" method="post">
-                                    <div class="form-row">
-                                        <div class="form-group  col-md-12">
-                                            <label>Username</label>
-                                            <input type="username" required class="form-control" placeholder="Username"
-                                                name="username">
-                                        </div>
-                                        <div class="form-group  col-md-12">
-                                            <label>Password</label>
-                                            <input type="password" required class="form-control" placeholder="Password"
-                                                name="password">
-                                        </div>
+                            <h3 class="text-center p-b-20 fw-400">SMA YADIKA 3</h3>
+                            <form class="needs-validation" action="" method="post">
+                                <div class="form-row">
+                                    <div class="form-group floating-label col-md-12">
+                                        <label>Username</label>
+                                        <input type="username" required class="form-control" placeholder="Username"
+                                            name="username">
                                     </div>
+                                    <div class="form-group floating-label col-md-12">
+                                        <label>Password</label>
+                                        <input type="password" required class="form-control" placeholder="Password"
+                                            name="password">
+                                    </div>
+                                </div>
 
-                                    <button type="submit" class="btn btn-primary btn-block btn-md"
-                                        name="login">Login</button>
+                                <button type="submit" class="btn btn-primary btn-block btn-lg" name="login">Login</button>
 
-                                </form>
-                            </div>
-
-
+                            </form>
                             <!-- <p class="text-right p-t-10">
                             <a href="#!" class="text-underline">Forgot Password?</a>
                         </p> -->
                         </div>
                     </div>
+                </div>
+                <div class="col-lg-8 d-none d-md-block bg-cover" style="background-image: url('assets/img/login.svg');">
+
                 </div>
             </div>
         </div>
