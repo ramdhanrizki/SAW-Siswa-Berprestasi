@@ -91,7 +91,7 @@
                 $cek_login  = mysqli_query($db, "SELECT * FROM tbl_pengguna WHERE username = '$username' AND password = '$password'");
                 if(mysqli_num_rows($cek_login) > 0){
                     $row = mysqli_fetch_array($cek_login);
-                    if($row['role'] == "Guru" || $row['role'] == "Admin"){
+                    if($row['role'] == "Guru" || $row['role'] == "Admin" || $row['role']=='Wali'){
                         // echo "hello ".$row['role'];
                         $_SESSION['Role'] = $row['role'];
                         $_SESSION['Username'] = $row['username'];

@@ -81,7 +81,7 @@
                                     <th>Nilai Rapor</th>
                                     <th>Kehadiran</th>
                                     <th>Nilai Sikap</th>
-                                    <th>Sampel</th>
+                                    <!-- <th>Sampel</th> -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -92,7 +92,7 @@
                                     <td><?=$row['nisn']?></td>
                                     <td><?=$row['nama_lengkap']?></td>
                                     <td><?=$row['jenis_kelamin']=='L'?'Laki-laki':'Perempuan'?></td>
-                                    <td><?=$row['rata']?$row['rata']:'Belum Input'?></td>
+                                    <td><?=$row['rata']?number_format($row['rata'],2,'.',','):'Belum Input'?></td>
                                     <?php 
                                         $kepribadian = mysqli_fetch_assoc(mysqli_query($db,"select * from tbl_subkriteria where id_subkriteria='$row[kepribadian]'"));
                                         $q = "select * from tbl_kehadiran where id_siswa='$row[alternatif]' and id_ajaran='$idajaran'";
@@ -101,7 +101,7 @@
                                     ?>
                                     <td><?=$kehadiran['persentase']?$kehadiran['persentase']:'Belum Input'?> %</td>
                                     <td><?=$kepribadian['nama_subkriteria']?$kepribadian['nama_subkriteria']:'Belum Input'?></td>
-                                    <td><?=$row['status']==1?'Sampel':'Bukan Sampel'?></td>
+                                    <!-- <td><?=$row['status']==1?'Sampel':'Bukan Sampel'?></td> -->
                                 </tr>
                                 <?php }?>
                             </tbody>

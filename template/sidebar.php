@@ -76,6 +76,18 @@
                 </a>
             </li>
 
+            <li class="menu-item <?=@$_GET['p']=='pelajaran'?'active':''?>">
+                <a href="index.php?p=pelajaran" class="menu-link">
+                    <span class="menu-label">
+                        <span class="menu-name">Data Pelajaran
+                        </span>
+                    </span>
+                    <span class="menu-icon">
+                        <i class="icon-placeholder mdi mdi-file-document-box-outline"></i>
+                    </span>
+                </a>
+            </li>
+
             <li class="menu-item <?=@$_GET['p']=='ajaran'?'active':''?>">
                 <a href="index.php?p=ajaran" class="menu-link">
                     <span class="menu-label">
@@ -88,7 +100,7 @@
                 </a>
             </li>
             <?php }?>
-            <?php if($_SESSION['Role']=='Guru'){?>
+            <?php if($_SESSION['Role']=='Wali'){?>
             <li class="menu-item <?=@$_GET['p']=='nilai'?'active':''?>">
                 <a href="index.php?p=nilai" class="menu-link">
                     <span class="menu-label">
@@ -111,6 +123,18 @@
                         <i class="icon-placeholder fa fa-tags"></i>
                     </span>
                 </a>
+            </li> 
+
+             <li class="menu-item <?=@$_GET['p']=='kehadiran'?'active':''?>">
+                <a href="index.php?p=kehadiran" class="menu-link">
+                    <span class="menu-label">
+                        <span class="menu-name">Input Kehadiran
+                        </span>
+                    </span>
+                    <span class="menu-icon">
+                        <i class="icon-placeholder fa fa-tags"></i>
+                    </span>
+                </a>
             </li>  
 
             <li class="menu-item <?=@$_GET['p']=='rekapsiswa'?'active':''?>">
@@ -125,7 +149,8 @@
                 </a>
             </li>  
             <?php }?>
-
+            
+            <?php if($_SESSION['Role']!='Guru') {?>
             <li class="menu-item <?=@$_GET['p']=='ranking'?'active':''?>">
                 <a href="index.php?p=ranking" class="menu-link">
                     <span class="menu-label">
@@ -137,6 +162,21 @@
                     </span>
                 </a>
             </li>
+            <?php }?>
+            
+            <?php if($_SESSION['Role']=='Guru') {?>
+            <li class="menu-item <?=@$_GET['p']=='nilai'?'active':''?>">
+                <a href="index.php?p=nilai" class="menu-link">
+                    <span class="menu-label">
+                        <span class="menu-name">Input Nilai
+                        </span>
+                    </span>
+                    <span class="menu-icon">
+                        <i class="icon-placeholder fa fa-tags"></i>
+                    </span>
+                </a>
+            </li>  
+            <?php }?>
             <!--list item ends-->
         </ul>
         <!-- Menu List Ends-->

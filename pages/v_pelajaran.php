@@ -1,7 +1,7 @@
 <?php 
-    $ajaran = mysqli_fetch_assoc(mysqli_query($db, "select * from tbl_ajaran order by tahun_ajaran desc"));
-    $querySiswa = "SELECT * FROM tbl_pengguna WHERE role='Guru' or role='Wali'";
-    $siswa = mysqli_query($db, $querySiswa);
+    $ajaran = mysqli_fetch_assoc(mysqli_query($db, "select * from tbl_ajaran order by id_ajaran desc"));
+    $kelas = mysqli_query($db, "SELECT * from tbl_matpel left join tbl_pengguna on tbl_pengguna.id_pengguna=tbl_matpel.id_guru")
+    // echo var_dump($kk);
 ?>  
 <div class="bg-dark">
     <div class="container  m-b-30">
@@ -9,28 +9,28 @@
             <div class="col-12 text-white p-t-40 p-b-90">
 
                 <h4 class=""> <span class="btn btn-white-translucent">
-                        <i class="mdi mdi-table "></i></span> Managemen Guru
+                        <i class="mdi mdi-table "></i></span> Managemen Pelajaran
                 </h4>
                 <p class="opacity-75 ">
-                    Halaman ini digunakan untuk menambah, hapus, dan mengupdate data Guru
+                    Halaman ini digunakan untuk menambah, hapus, dan mengupdate data Pelajaran
                 </p>
             </div>
         </div>
     </div>
 </div>
 <div class="container  pull-up">
-    <div class="row p-b-15">
+    <div class="row">
         <div class="col-12">
-            <div class="card">
+            <div class="card mb-3">
                 <div class="card-body">
                     <div class="row m-b-20">
                         <div class="col-md-6 my-auto">
-                            <h4 class="m-0">Data Guru</h4>
+                            <h4 class="m-0">Data Kelas</h4>
                         </div>
                         <div class="col-md-6 text-right my-auto">
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <button type="button" class="btn btn-white shadow-none" data-toggle="modal"
-                                    data-target="#modalTambahGuru"><i class="mdi mdi-plus"></i> Tambah Guru
+                                    data-target="#modalTambahKelas"><i class="mdi mdi-plus"></i> Tambah Pelajaran
                                 </button>
                                 <!-- <button type="button" class="btn btn-white shadow-none">
                                     <i class="mdi mdi-import"></i>Import Excel</button>
@@ -41,26 +41,26 @@
                         </div>
                     </div>
                     <div class="table-responsive p-t-10">
-                        <table id="example" class="table   " style="width:100%">
+                        <table id="example" class="table" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>NIP</th>
-                                    <th>Nama</th>
-                                    <th>Username</th>
-                                    <th>Role</th>
+                                    <th>No</th>
+                                    <th>Nama Pelajaran</th>
+                                    <th>Kelompok</th>
+                                    <th>Guru Matpel</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php while($row = mysqli_fetch_array($siswa)) {?>
+                                <?php $no=1; while($row = mysqli_fetch_array($kelas)) {?>
                                 <tr>
-                                    <td><?=$row['nip']?></td>
-                                    <td><?=$row['nama']?></td>
-                                    <td><?=$row['username']?></td>
-                                    <td><?=$row['role']?></td>
+                                    <td><?=$no++?></td>
+                                    <td><?=$row['nama_pelajaran']?></td>
+                                    <td><?=$row['kelompok']?></td>
+                                    <td><?=$row['nama']?$row['nama']:'Guru Belum di set'?></td>
                                     <td>
-                                        <a href="<?=BASE_URL?>/api/guru.php?aksi=delete&id=<?=$row['id_pengguna']?>" class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin akan menghapus data guru tersebut?');"><i class="fa fa-trash"></i></a>
-                                        <a href="<?=BASE_URL?>/index.php?p=update_guru&id=<?=$row['id_pengguna']?>" class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i></a>
+                                        <a href="<?=BASE_URL?>/api/matpel.php?aksi=delete&id=<?=$row['id_matpel']?>" class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin akan menghapus data pelajaran tersebut?');"><i class="fa fa-trash"></i></a>
+                                        <a href="<?=BASE_URL?>/index.php?p=update_pelajaran&id=<?=$row['id_matpel']?>" class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i></a>
                                     </td>
                                 </tr>
                                 <?php }?>
@@ -72,4 +72,4 @@
         </div>
     </div>
 </div>
-<?php include "modal/modal_tambah_guru.php";?>
+<?php include "modal/modal_tambah_pelajaran.php";?>

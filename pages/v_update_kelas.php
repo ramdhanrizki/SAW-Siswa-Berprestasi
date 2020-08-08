@@ -1,5 +1,5 @@
 <?php 
-    $kelas = mysqli_query($db, "select * from tbl_kelas left join tbl_pengguna on tbl_pengguna.id_pengguna = tbl_kelas.id_kelas
+    $kelas = mysqli_query($db, "select * from tbl_kelas left join tbl_pengguna on tbl_pengguna.id_pengguna = tbl_kelas.wali_kelas
                         WHERE tbl_kelas.id_kelas = '$_GET[id]'");
 
 ?>  
@@ -45,7 +45,7 @@
                     <div class="form-group">
                         <label for="nisn">Wali Kelas</label>
                         <select name="wali_kelas" id="" class="form-control">
-                           <?=getListGuru($db, $row['wali_kelas'])?>
+                           <?=getListWali($db, $row['wali_kelas'])?>
                         </select>
                     </div>
 

@@ -8,7 +8,11 @@
     $idajaran = @$_GET['ajaran'];
     if($kelas && $ajaran) {
         $qkelas = mysqli_fetch_assoc(mysqli_query($db, "SELECT * FROM tbl_kelas where id_kelas='$kelas'"));
-        $mapel = mysqli_query($db, "SELECT * FROM tbl_matpel WHERE kelompok='wajib' or kelompok='$qkelas[jurusan]'");
+        if($_SESSION['Role']=='Guru') {
+            $mapel = mysqli_query($db, "SELECT * FROM tbl_matpel WHERE (kelompok='wajib' or kelompok='$qkelas[jurusan]') and id_guru='$_SESSION[id_pengguna]'");
+        }else {
+            $mapel = mysqli_query($db, "SELECT * FROM tbl_matpel WHERE kelompok='wajib' or kelompok='$qkelas[jurusan]'");
+        }
     }
     
     // echo mysqli_error($db);
@@ -52,6 +56,9 @@
                                 <option value="" name="kelas">Pilih Kelas Anda</option>
                                 <?php 
                                     $q = mysqli_query($db, "SELECT * FROM tbl_kelas WHERE wali_kelas='$_SESSION[id_pengguna]'");
+                                    if($_SESSION['Role']=='Guru') {
+                                        $q = mysqli_query($db, "SELECT * FROM tbl_kelas");
+                                    }
                                     while($row = mysqli_fetch_array($q)) {
                                         if($kelas==$row['id_kelas']) {
                                             echo "<option value='$row[id_kelas]' selected>$row[nama_kelas]</option>";

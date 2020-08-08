@@ -62,6 +62,15 @@
             case "rekapsiswa":
                 include "pages/v_rekap_siswa.php";
             break;
+            case "kehadiran":
+                include "pages/v_kehadiran.php";
+            break;
+            case "pelajaran":
+                include "pages/v_pelajaran.php";
+            break;
+            case "update_pelajaran":
+                include "pages/v_update_pelajaran.php";
+            break;
             default:
                 echo "<script>document.location.href='".BASE_URL."/404.php'</script>";
                 // header("location:404.php");

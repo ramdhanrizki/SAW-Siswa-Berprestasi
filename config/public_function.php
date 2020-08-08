@@ -12,7 +12,18 @@
     }
 
     function getListGuru($db, $id=null){
-        $kelas = mysqli_query($db, "SELECT * from tbl_pengguna where role='Guru'
+        $kelas = mysqli_query($db, "SELECT * from tbl_pengguna where role='Guru'");
+        while($row = mysqli_fetch_array($kelas)) {
+            if($id==$row['id_pengguna']) {
+                echo "<option value='$row[id_pengguna]' selected>$row[nama]</option>";
+            } else {
+                echo "<option value='$row[id_pengguna]'>$row[nama]</option>";
+            }
+        }
+    }
+
+    function getListWali($db, $id=null){
+        $kelas = mysqli_query($db, "SELECT * from tbl_pengguna where role='Wali'
             and id_pengguna not in (select wali_kelas from tbl_kelas)");
         while($row = mysqli_fetch_array($kelas)) {
             if($id==$row['id_pengguna']) {

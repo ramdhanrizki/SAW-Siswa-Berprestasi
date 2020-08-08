@@ -30,6 +30,14 @@ aria-labelledby="slideLeftModalLabel" aria-hidden="true">
                     <label for="password">Password</label>
                     <input type="password" name="password" class="form-control" required>
                 </div>
+
+                <div class="form-group">
+                    <label for="role">Role</label>
+                    <select name="role" class="form-control">
+                        <option value="Wali">Wali Kelas</option>
+                        <option value="Guru">Guru Matpel</option>
+                    </select>
+                </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">

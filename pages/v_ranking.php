@@ -32,8 +32,7 @@
         left join tbl_kelas on tbl_kelas.id_kelas = tbl_anggota_kelas.id_kelas
         left join tbl_kepribadian pribadi on pribadi.id_siswa = tbl_siswa.id_siswa and pribadi.id_ajaran='$idajaran'
         where tbl_anggota_kelas.id_ajaran = '$idajaran'
-        and tbl_kelas.jurusan = '$jurusan'
-        and tbl_siswa.status='1'";
+        and tbl_kelas.jurusan = '$jurusan'";
         $siswa = mysqli_query($db, $q);
         mysqli_query($db, "DELETE FROM tbl_hasil WHERE id_ajaran='$idajaran' and jurusan='$jurusan'");
 
@@ -343,20 +342,23 @@
                                     <th>NISN</th>
                                     <th>Nama Siswa</th>
                                     <th>Jenis Kelamin</th>
-                                    <th>N. Rata-rata</th>
-                                    <th>Kehadiran</th>
-                                    <th>Kepribadian</th>
+                                    <th>Kelas</th>
                                     <th>Hasil SAW</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <?php
-                                        $res = mysqli_query($db,"select * from tbl_hasil
-                                            left join tbl_siswa on tbl_siswa.id_siswa = tbl_hasil.id_siswa where id_ajaran='$idajaran'
-                                            and jurusan = '$jurusan'
-                                            order by nilai desc");
+                                        $q = "select * from tbl_hasil
+                                        left join tbl_siswa on tbl_siswa.id_siswa = tbl_hasil.id_siswa
+                                        left join tbl_anggota_kelas on tbl_siswa.id_siswa = tbl_anggota_kelas.id_siswa and tbl_anggota_kelas.id_ajaran='$idajaran'
+                                        left join tbl_kelas on tbl_kelas.id_kelas = tbl_anggota_kelas.id_kelas
+                                        where tbl_hasil.id_ajaran='$idajaran'
+                                        and tbl_hasil.jurusan = '$jurusan' 
+                                        order by nilai desc";
+                                        $res = mysqli_query($db,$q);
                                         // echo mysqli_error($db);
+                                        // echo $q;
                                         $idx=1;
                                         while($row=mysqli_fetch_array($res)){
                                             echo "<tr>
@@ -364,9 +366,7 @@
                                                 <td>$row[nisn]</td>
                                                 <td>$row[nama_lengkap]</td>
                                                 <td>$row[jenis_kelamin]</td>
-                                                <td>$row[rata_rata]</td>
-                                                <td>$row[kehadiran]</td>
-                                                <td>$row[kepribadian]</td>
+                                                <td>$row[nama_kelas]</td>
                                                 <td>$row[nilai]</td>
                                             </tr>";
                                         }

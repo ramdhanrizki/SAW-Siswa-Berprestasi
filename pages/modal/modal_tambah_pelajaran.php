@@ -4,35 +4,32 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="slideLeftModalLabel">Tambah Kelas</h5>
+                <h5 class="modal-title" id="slideLeftModalLabel">Tambah Pelajaran</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" action="<?=BASE_URL?>/api/kelas.php?aksi=tambah" id="formTambahKelas">
+                <form method="post" action="<?=BASE_URL?>/api/matpel.php?aksi=tambah" id="formTambahKelas">
                      <div class="form-group">
-                        <label for="nisn">Nama Kelas</label>
-                        <input type="text" name="nama_kelas" class="form-control" required>
+                        <label for="nisn">Nama Pelajaran</label>
+                        <input type="text" name="pelajaran" class="form-control" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="nisn">Jenjang</label>
-                        <input type="number" name="tingkat" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="nisn">Jurusan</label>
-                        <select name="jurusan" class="form-control" required>
-                            <option value="IPA">IPA</option>
-                            <option value="IPS">IPS</option>
+                        <label for="nisn">Kelompok</label>
+                        <select name="kelompok" class="form-control" required>
+                            <option value="WAJIB" selected>WAJIB</option>
+                            <option value="IPA">Khusus IPA</option>
+                            <option value="IPS">Khusus IPS</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="nisn">Wali Kelas</label>
-                        <select name="wali_kelas" id="" class="form-control">
-                           <?=getListWali($db)?>
+                        <label for="nisn">Guru</label>
+                        <select name="guru" id="" class="form-control" required>
+                            <option value="" selected>Pilih Guru</option>
+                           <?=getListGuru($db)?>
                         </select>
                     </div>
             </div>
@@ -40,7 +37,7 @@
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                     Batalkan
                 </button>
-                <button type="submit" name="tambah" class="btn btn-primary">Tambah Kelas</button>
+                <button type="submit" name="tambah" class="btn btn-primary">Tambah Pelajaran</button>
                 </form>
             </div>
         </div>
